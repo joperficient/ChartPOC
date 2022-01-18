@@ -10,6 +10,8 @@ import com.github.mikephil.charting.data.BarDataSet
 
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.utils.MPPointF
+import com.perficient.chartpoc.adapter.AdapterChartTimeFrameSelector
+import com.perficient.chartpoc.adapter.ChartTimeFrame
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,19 +31,30 @@ class MainActivity : AppCompatActivity() {
                 icon = resources.getDrawable(R.drawable.ic_urgent_circle_small)
             })
         }
-        for(i in 6 .. 24) {
+        for (i in 6..24) {
             val yRandom: Float = (50..100).random().toFloat()
 
             barEntries.add(BarEntry(i.toFloat(), yRandom).apply {
-               // icon = resources.getDrawable(R.drawable.ic_urgent_circle_small)
+                // icon = resources.getDrawable(R.drawable.ic_urgent_circle_small)
             })
         }
+
+        val adapter = AdapterChartTimeFrameSelector()
+
+        biding.timeFrameRv.adapter = adapter
+
+        adapter.addData(
+            listOf(
+                ChartTimeFrame("1D", true), ChartTimeFrame("7D"),
+                ChartTimeFrame("30D"), ChartTimeFrame("1Y")
+            )
+        )
 
         val yAxis = biding.chart.getAxis(YAxis.AxisDependency.LEFT)
         yAxis.axisMaximum = 100f
         yAxis.axisMinimum = 0f
         yAxis.gridLineWidth = 2f
-        yAxis.gridColor  = resources.getColor(R.color.gray_char)
+        yAxis.gridColor = resources.getColor(R.color.gray_char)
         yAxis.setLabelCount(3, true)
         yAxis.axisLineColor = resources.getColor(R.color.transparent)
 
@@ -61,15 +74,15 @@ class MainActivity : AppCompatActivity() {
 
         setCalibrating.color = resources.getColor(R.color.gray_calibrating)
         setCalibrating.setDrawValues(false)
-        setCalibrating.iconsOffset = MPPointF(0f,- 2f)
+        setCalibrating.iconsOffset = MPPointF(0f, -2f)
 
         val data = BarData(set, setCalibrating)
+        data.barWidth = 0.5f
 
         biding.chart.data = data
 
 
         biding.chart.invalidate()
-
 
 
     }
