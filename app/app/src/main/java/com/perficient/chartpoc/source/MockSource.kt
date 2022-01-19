@@ -37,6 +37,33 @@ object MockSource {
                 }
             })
 
-        return ChartData(mutableListOf(charTimeDay, week))
+
+
+        val monthly = ChartTimeFrame.Builder("30D")
+            .setType(FormatterType.WEEKLY)
+            .build(mutableListOf<ChartInput>().apply {
+                for (i in 0..1) {
+                    add(ChartInput(i.toFloat(), i.toFloat() * 10, isCalibration = true))
+                }
+                for (i in 2..30) {
+                    val yRandom: Float = (50..100).random().toFloat()
+                    add(ChartInput(i.toFloat(), yRandom))
+                }
+            })
+
+        val yearly = ChartTimeFrame.Builder("Y")
+            .setType(FormatterType.YEARLY)
+            .build(mutableListOf<ChartInput>().apply {
+                for (i in 0..1) {
+                    add(ChartInput(i.toFloat(), i.toFloat() * 10, isCalibration = true))
+                }
+                for (i in 2..30) {
+                    val yRandom: Float = (50..100).random().toFloat()
+                    add(ChartInput(i.toFloat(), yRandom))
+                }
+            })
+
+
+        return ChartData(mutableListOf(charTimeDay, week, monthly, yearly))
     }
 }
