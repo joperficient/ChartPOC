@@ -9,20 +9,17 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.MPPointF
 import com.perficient.chartpoc.adapter.AdapterChartTimeFrameSelector
-import com.perficient.chartpoc.adapter.ChartTimeFrame
-import com.perficient.chartpoc.model.DayFormatter
-import com.perficient.chartpoc.model.MonthFormatter
-import com.perficient.chartpoc.model.WeekFormatter
-import com.perficient.chartpoc.model.YearFormatter
+import com.perficient.chartpoc.model.*
+import com.perficient.chartpoc.source.MockSource
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var biding: ActivityMainBinding
     private lateinit var adapter : AdapterChartTimeFrameSelector
 
+    /*
     private val timeFrames = mutableListOf(
         ChartTimeFrame("1D", true, formatter = DayFormatter),
         ChartTimeFrame("7D", formatter = WeekFormatter),
@@ -30,38 +27,45 @@ class MainActivity : AppCompatActivity() {
         ChartTimeFrame("1Y", formatter = YearFormatter)
     )
 
+
+     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         biding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(biding.root)
+        setChart(MockSource.loadData())
+
+
+    }
+
+    private fun setChart(data: ChartData) {
 
         adapter = AdapterChartTimeFrameSelector { selected ->
-            timeFrames.filter { it != selected }.forEach { it.isSelected = false }
-            adapter.updateData(timeFrames)
-            setChart(selected.formatter)
+            data.timeFrames.filter { it != selected }.forEach { it.isSelected = false }
+            adapter.updateData(data.timeFrames)
+            setChartTimeFrame(selected)
         }
 
         biding.timeFrameRv.adapter = adapter
 
-        adapter.addData(timeFrames)
+        adapter.addData(data.timeFrames)
 
-        setChart(timeFrames[0].formatter)
-
+        setChartTimeFrame(data.timeFrames[0])
     }
 
-    private fun setChart(formatter: ValueFormatter) {
+    private fun setChartTimeFrame(charTimeFrame: ChartTimeFrame) {
         val barEntries = ArrayList<BarEntry>()
         val barEntriesCalibrating = ArrayList<BarEntry>()
 
-        for (i in 0..5) {
-            barEntriesCalibrating.add(BarEntry(i.toFloat(), i.toFloat() * 10).apply {
-                icon = resources.getDrawable(R.drawable.ic_urgent_circle_small)
-            })
-        }
-
-        for (i in 6..24) {
-            val yRandom: Float = (50..100).random().toFloat()
-            barEntries.add(BarEntry(i.toFloat(), yRandom))
+        charTimeFrame.listInput.forEach {
+            if (it.isCalibration) {
+                barEntriesCalibrating.add(BarEntry(it.x, it.y).apply {
+                    icon = resources.getDrawable(R.drawable.ic_urgent_circle_small)
+                })
+            } else {
+                barEntries.add(BarEntry(it.x, it.y))
+            }
         }
 
         val yAxis = biding.chart.getAxis(YAxis.AxisDependency.LEFT)
@@ -77,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         biding.chart.xAxis.setLabelCount(5, true)
         biding.chart.xAxis.setDrawGridLines(false)
         biding.chart.xAxis.setCenterAxisLabels(true)
-        biding.chart.xAxis.valueFormatter = formatter
+        biding.chart.xAxis.valueFormatter = charTimeFrame.formatter
 
         biding.chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
