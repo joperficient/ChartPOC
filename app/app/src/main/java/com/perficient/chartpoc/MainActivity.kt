@@ -47,13 +47,13 @@ class MainActivity : AppCompatActivity() {
         val barEntries = ArrayList<BarEntry>()
         val barEntriesCalibrating = ArrayList<BarEntry>()
 
-        charTimeFrame.listInput.forEach {
+        charTimeFrame.listInput.forEachIndexed { index, it ->
             if (it.isCalibration) {
-                barEntriesCalibrating.add(BarEntry(it.x, it.y).apply {
+                barEntriesCalibrating.add(BarEntry(index.toFloat(), it.y).apply {
                     icon = resources.getDrawable(R.drawable.ic_urgent_circle_small)
                 })
             } else {
-                barEntries.add(BarEntry(it.x, it.y))
+                barEntries.add(BarEntry(index.toFloat(), it.y))
             }
         }
 
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         biding.chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         biding.chart.xAxis.textColor = resources.getColor(R.color.gray_calibrating)
-        biding.chart.xAxis.textSize = 15f
+        biding.chart.xAxis.textSize = 11f
 
 
         val set = BarDataSet(barEntries, "Bar entries")
@@ -89,9 +89,11 @@ class MainActivity : AppCompatActivity() {
         setCalibrating.iconsOffset = MPPointF(0f, -2f)
 
         val data = BarData(set, setCalibrating)
+
         data.barWidth = 0.5f
 
         biding.chart.data = data
+        biding.chart.legend.isEnabled = false
         biding.chart.invalidate()
     }
 
