@@ -6,7 +6,6 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:background="?selectableItemBackground"
         app:cardUseCompatPadding="false"
         app:cardPreventCornerOverlap="true"
         app:cardElevation="0dp"

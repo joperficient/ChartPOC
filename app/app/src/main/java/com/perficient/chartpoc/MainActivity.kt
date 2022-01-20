@@ -19,17 +19,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var biding: ActivityMainBinding
     private lateinit var adapter : AdapterChartTimeFrameSelector
 
-    /*
-    private val timeFrames = mutableListOf(
-        ChartTimeFrame("1D", true, formatter = DayFormatter),
-        ChartTimeFrame("7D", formatter = WeekFormatter),
-        ChartTimeFrame("30D", formatter = MonthFormatter),
-        ChartTimeFrame("1Y", formatter = YearFormatter)
-    )
-
-
-     */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         biding = ActivityMainBinding.inflate(layoutInflater)
@@ -75,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         yAxis.gridColor = resources.getColor(R.color.gray_char)
         yAxis.setLabelCount(3, true)
         yAxis.axisLineColor = resources.getColor(R.color.transparent)
+        yAxis.textColor = resources.getColor(R.color.gray_calibrating)
 
         biding.chart.getAxis(YAxis.AxisDependency.RIGHT).isEnabled = false
 
@@ -84,6 +74,9 @@ class MainActivity : AppCompatActivity() {
         biding.chart.xAxis.valueFormatter = charTimeFrame.formatter
 
         biding.chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        biding.chart.xAxis.textColor = resources.getColor(R.color.gray_calibrating)
+        biding.chart.xAxis.textSize = 15f
+
 
         val set = BarDataSet(barEntries, "Bar entries")
         val setCalibrating = BarDataSet(barEntriesCalibrating, "Calibrating time")
