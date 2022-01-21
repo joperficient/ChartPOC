@@ -8,5 +8,3 @@ data class ChartInput(
     val isCalibration: Boolean = false,
     val nonCollectedYet: Boolean = false
 )
-
-//fun createNonCollectedChartInput(y: Float) = ChartInput(0f, y, false, true)

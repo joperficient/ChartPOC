@@ -24,14 +24,7 @@ data class ChartTimeFrame(val title: String,
         }
 
         fun build(listInput: MutableList<ChartInput>): ChartTimeFrame {
-
             return ChartTimeFrame(title, isSelected, type, XAxisDateFormatter(listInput, type), listInput)
         }
-
     }
-
 }
-
-
-
-
