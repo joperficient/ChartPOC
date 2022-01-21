@@ -1,11 +1,11 @@
-package com.perficient.chartpoc.adapter
+package com.perficient.timeframechart.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.perficient.chartpoc.R
-import com.perficient.chartpoc.databinding.ChartTimeFrameSelectorBinding
-import com.perficient.chartpoc.model.ChartTimeFrame
+import com.perficient.timeframechart.R
+import com.perficient.timeframechart.databinding.ChartTimeFrameSelectorBinding
+import com.perficient.timeframechart.model.ChartTimeFrame
 
 class AdapterChartTimeFrameSelector(val timeFrameListener: (ChartTimeFrame) -> Unit) :
     RecyclerView.Adapter<AdapterChartTimeFrameSelector.ViewHolder>() {

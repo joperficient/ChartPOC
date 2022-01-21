@@ -1,3 +1,3 @@
-package com.perficient.chartpoc.model
+package com.perficient.timeframechart.model
 
 data class ChartData(val timeFrames: MutableList<ChartTimeFrame>)

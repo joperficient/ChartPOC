@@ -1,4 +1,4 @@
-package com.perficient.chartpoc.model
+package com.perficient.timeframechart.model
 
 import com.github.mikephil.charting.formatter.ValueFormatter
 

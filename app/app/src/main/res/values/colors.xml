@@ -7,8 +7,5 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="gray_char">#CFD2D5</color>
-    <color name="gray_calibrating">#4B4949</color>
-    <color name="transparent">#00FFFFFF</color>
 
 </resources>

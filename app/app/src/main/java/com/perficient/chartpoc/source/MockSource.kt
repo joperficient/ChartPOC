@@ -1,9 +1,9 @@
 package com.perficient.chartpoc.source
 
-import com.perficient.chartpoc.model.ChartData
-import com.perficient.chartpoc.model.ChartInput
-import com.perficient.chartpoc.model.ChartTimeFrame
-import com.perficient.chartpoc.model.FormatterType
+import com.perficient.timeframechart.model.ChartData
+import com.perficient.timeframechart.model.ChartInput
+import com.perficient.timeframechart.model.ChartTimeFrame
+import com.perficient.timeframechart.model.FormatterType
 import java.util.*
 
 object MockSource {
