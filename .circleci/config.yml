@@ -64,10 +64,4 @@ workflows:
     jobs:
       - unit-test
       - android-test
-      - debug-build:
-         requires:
-          - unit-test
-          - android-test
-          filters:
-            branches:
-              only: dev # Commits to dev branch
+      - debug-build
