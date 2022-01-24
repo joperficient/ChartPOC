@@ -64,7 +64,7 @@ workflows:
     jobs:
       - unit-test
       - android-test
-      - debug-build
+      - debug-build:
          requires:
           - unit-test
           - android-test
