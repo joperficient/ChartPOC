@@ -44,12 +44,6 @@ jobs:
           system-image: system-images;android-30;google_apis;x86
 
   debug-build:
-    requires:
-      - unit-test
-      - android-test
-      filters:
-        branches:
-          only: dev # Commits to dev branch
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -71,3 +65,9 @@ workflows:
       - unit-test
       - android-test
       - debug-build
+         requires:
+          - unit-test
+          - android-test
+          filters:
+            branches:
+              only: dev # Commits to dev branch
