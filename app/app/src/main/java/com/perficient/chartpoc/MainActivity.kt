@@ -1,11 +1,19 @@
 package com.perficient.chartpoc
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.perficient.chartpoc.databinding.ActivityMainBinding
+import com.perficient.chartpoc.source.MockSource
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var biding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        biding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(biding.root)
+        biding.timeFrameChart.setChart(MockSource.loadData())
     }
+
+
 }
