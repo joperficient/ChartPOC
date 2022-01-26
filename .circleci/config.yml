@@ -17,6 +17,10 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+      - run:
+          name: 'access app folder'
+          command: |
+            cd app
       - android/run-tests:
           test-command: ./gradlew testDebug
       - android/save-gradle-cache
@@ -28,9 +32,9 @@ jobs:
             find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
       - store_test_results:
-          path: ~/test-results
+          path: ~/app/test-results
       - store_artifacts:
-          path: ~/test-results/junit
+          path: ~/app/test-results/junit
 
 
   android-test:
@@ -39,6 +43,10 @@ jobs:
       resource-class: xlarge
     steps:
       - checkout
+      - run:
+          name: 'access app folder'
+          command: |
+            cd app
       - android/start-emulator-and-run-tests:
           test-command: ./gradlew connectedDebugAndroidTest
           system-image: system-images;android-30;google_apis;x86
@@ -51,6 +59,10 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+      - run:
+          name: 'access app folder'
+          command: |
+            cd app
       - run:
           name: Assemble Debug build
           command: |
