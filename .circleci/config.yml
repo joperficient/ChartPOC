@@ -31,12 +31,6 @@ jobs:
             mkdir -p ~/test-results/junit/
             find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
-      - store_test_results:
-          path: ~/app/test-results
-      - store_artifacts:
-          path: ~/app/test-results/junit
-
-
   android-test:
     executor:
       name: android/android-machine
