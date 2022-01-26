@@ -18,9 +18,8 @@ jobs:
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
-          name: Access app folder
-          command: |
-            cd app
+          name: 'Access app folder'
+          command: cd app
       - android/run-tests:
           test-command: ./gradlew testDebug
       - android/save-gradle-cache
@@ -44,7 +43,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Access app folder
+          name: 'Access app folder'
           command: |
             cd app
       - android/start-emulator-and-run-tests:
@@ -60,7 +59,7 @@ jobs:
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
-          name: Access app folder
+          name: 'Access app folder'
           command: |
             cd app
       - run:
