@@ -62,6 +62,4 @@ jobs:
 workflows:
   debug-build-workflow:
     jobs:
-      - unit-test
-      - android-test
       - debug-build
