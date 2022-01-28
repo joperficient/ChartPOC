@@ -17,10 +17,6 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
-      - run:
-          name: 'access app folder'
-          command: |
-            cd app
       - android/run-tests:
           test-command: ./gradlew testDebug
       - android/save-gradle-cache
@@ -43,10 +39,6 @@ jobs:
       resource-class: xlarge
     steps:
       - checkout
-      - run:
-          name: 'access app folder'
-          command: |
-            cd app
       - android/start-emulator-and-run-tests:
           test-command: ./gradlew connectedDebugAndroidTest
           system-image: system-images;android-30;google_apis;x86
@@ -60,12 +52,9 @@ jobs:
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
-          name: 'access app folder'
-          command: |
-            cd app
-      - run:
           name: Assemble Debug build
           command: |
+            cd app
             ./gradlew assembleDebug
       - store_artifacts:
           path: app/app/build/outputs/apk/debug
