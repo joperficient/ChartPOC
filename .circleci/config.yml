@@ -17,10 +17,11 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+      - run:
+          name: 'Accessing Folder App'
+          command: cd app
       - android/run-tests:
-          test-command:
-          cd app
-          ./gradlew testDebug
+          test-command: ./gradlew testDebug
       - android/save-gradle-cache
       - android/save-build-cache
       - run:
@@ -42,9 +43,7 @@ jobs:
     steps:
       - checkout
       - android/start-emulator-and-run-tests:
-          test-command:
-          cd app
-          ./gradlew connectedDebugAndroidTest
+          test-command: cd app ./gradlew connectedDebugAndroidTest
           system-image: system-images;android-30;google_apis;x86
 
   debug-build:
