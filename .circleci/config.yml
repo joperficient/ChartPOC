@@ -43,7 +43,7 @@ jobs:
     steps:
       - checkout
       - android/start-emulator-and-run-tests:
-          test-command: cd app ./gradlew connectedDebugAndroidTest
+          test-command: cd app && ./gradlew connectedDebugAndroidTest
           system-image: system-images;android-30;google_apis;x86
 
   debug-build:
@@ -68,3 +68,4 @@ workflows:
     jobs:
       - debug-build
       - unit-test
+      - android-test
