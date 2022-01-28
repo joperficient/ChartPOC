@@ -17,12 +17,9 @@ jobs:
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
-          name: 'access app folder'
-          command: |
-            cd app
-      - run:
           name: Assemble Debug build
           command: |
+            cd app
             ./gradlew assembleDebug
       - store_artifacts:
           path: app/build/outputs/apk/debug
