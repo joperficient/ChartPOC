@@ -17,6 +17,18 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+       #Run Lint
+      - android/run-tests:
+          test-command: ./gradlew ktlint || true
+      - run:
+          name: Save lint results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/ktlint-report.xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_artifacts:
+          path: ~/test-results/junit    
+
       - android/run-tests:
           test-command: ./gradlew testDebug
       - android/save-gradle-cache
