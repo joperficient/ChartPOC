@@ -19,12 +19,12 @@ jobs:
       - android/restore-build-cache
        #Run Lint
       - android/run-tests:
-          test-command: ./gradlew ktlint || true
+          test-command: ./gradlew lint
       - run:
           name: Save lint results
           command: |
             mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/ktlint-report.xml" -exec cp {} ~/test-results/junit/ \;
+            find . -type f -regex ".*/lint-results-debug.xml" -exec cp {} ~/test-results/junit/ \;
           when: always
       - store_artifacts:
           path: ~/test-results/junit    
