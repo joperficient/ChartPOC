@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'jacoco'
 }
 
 android {
@@ -21,6 +22,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,7 +38,39 @@ android {
         viewBinding true
     }
 
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            unitTests.returnDefaultValues = true
+        }
+    }
+
 }
+
+
+jacoco {
+    toolVersion = '0.8.5'
+}
+
+task jacocoTestReport(type: JacocoReport,
+        dependsOn: ['testDebugUnitTest',
+                    'createDebugCoverageReport']) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        csv.enabled = true
+    }
+
+    sourceDirectories.from = subprojects.sourceSets.main.allSource.srcDirs
+    additionalSourceDirs.from = subprojects.sourceSets.main.allSource.srcDirs
+    classDirectories.from = subprojects.sourceSets.main.output
+    executionData.from = subprojects.jacocoTestReport.executionData
+}
+
 
 dependencies {
 
