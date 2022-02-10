@@ -36,7 +36,7 @@ jobs:
           name: Save lint results
           command: |
             mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/build/reports/coverage/androidTest/debug/index.html" -exec cp {} ~/test-results/junit/ \; mv ~/test-results/junit/index.html ~/test-results/junit/coverage_results.html
+            find . -type f -regex ".*/build/reports/coverage/androidTest/debug/index.html" -exec cp {} ~/test-results/junit/ \;&& mv ~/test-results/junit/index.html ~/test-results/junit/coverage_results.html
           when: always
       - store_artifacts:
           path: ~/test-results/junit   
