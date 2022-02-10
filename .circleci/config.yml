@@ -29,6 +29,18 @@ jobs:
       - store_artifacts:
           path: ~/test-results/junit    
 
+       #Test coverage 
+      - android/run-tests:
+          test-command: ./gradlew jacocoTestReport
+      - run:
+          name: Save lint results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/reports/coverage/androidTest/debug/index.html" -exec cp {} ~/test-results/junit/ \; mv ~/test-results/junit/index.html ~/test-results/junit/coverage_results.html
+          when: always
+      - store_artifacts:
+          path: ~/test-results/junit   
+
       - android/run-tests:
           test-command: ./gradlew testDebug
       - android/save-gradle-cache
