@@ -30,7 +30,7 @@ jobs:
           path: ~/test-results/junit    
 
        #Test coverage 
-      - android/run-tests:
+      - android/start-emulator-and-run-tests:
           test-command: ./gradlew jacocoTestReport
       - run:
           name: Save lint results
