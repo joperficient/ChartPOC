@@ -36,7 +36,8 @@ jobs:
           name: Save Coverage results
           command: |
             mkdir -p ~/test-results/junit/
-            mv ./app/build/reports/coverage/androidTest/debug ~/test-results/junit/ && mv ~/test-results/junit/debug/index.html ~/test-results/junit/debug/coverage_results.html && mv ~/test-results/junit/debug ~/test-results/junit/coverage_results          when: always
+            mv ./app/build/reports/coverage/androidTest/debug ~/test-results/junit/ && mv ~/test-results/junit/debug/index.html ~/test-results/junit/debug/coverage_results.html && mv ~/test-results/junit/debug ~/test-results/junit/coverage_results    
+             when: always
       - store_artifacts:
           path: ~/test-results/junit   
 
