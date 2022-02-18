@@ -18,7 +18,7 @@ jobs:
       - node/install:
           install-yarn: true
           node-version: '16.13'
-      - run: npm
+      - run: node --version
   unit-test:
     executor:
       name: android/android-machine
@@ -85,6 +85,9 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
       - run:
           name: Download appcenter
           command: sudo npm install appcenter-cli -g
