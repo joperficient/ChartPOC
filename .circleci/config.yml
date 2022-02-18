@@ -97,7 +97,7 @@ jobs:
             ./gradlew assembleDebug
       - run:
           name: Deliver to appcenter
-          command: appcenter distribute release --debug --app USER/APP --file app/build/outputs/apk/debug/app-debug.apk --group "App Testers"
+          command: appcenter distribute release --debug --app juan.ocampo-perficient.com/ChartPOC --file app/build/outputs/apk/debug/app-debug.apk --group "App Testers"
       - store_artifacts:
           path: app/build/outputs/apk/debug
 # Invoke jobs via workflows
