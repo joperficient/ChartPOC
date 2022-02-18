@@ -103,6 +103,8 @@ workflows:
   test-and-build:
     jobs:
       - install-node-example
-      - debug-build
       - unit-test
       - android-test
+      - debug-build:
+          requires:
+            - install-node-example
