@@ -85,10 +85,9 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
-      - node/install:
-          install-yarn: true
-          node-version: '16.13'
-      - run: npm install appcenter-cli -g
+      - run:
+          name: Download appcenter
+          command: npm install appcenter-cli -g
       - run:
             name: Login
             command: appcenter login --token 0da0d7cd558b2eb4197f7725d20270877530a65d
