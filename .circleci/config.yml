@@ -10,6 +10,15 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+  install-node-example:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
+      - run: node --version
   unit-test:
     executor:
       name: android/android-machine
@@ -93,6 +102,7 @@ jobs:
 workflows:
   test-and-build:
     jobs:
+      - install-node-example
       - debug-build
       - unit-test
       - android-test
