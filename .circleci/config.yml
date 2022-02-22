@@ -4,11 +4,21 @@ version: 2.1
 
 orbs:
   android: circleci/android@1.0.3
-  gcp-cli: circleci/gcp-cli@2.2.0
+  gcp-cli: circleci/gcp-cli@2.2.0 
+  node: circleci/node@5.0.0
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+  install-node-example:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
+      - run: node --version
   unit-test:
     executor:
       name: android/android-machine
@@ -28,6 +38,18 @@ jobs:
           when: always
       - store_artifacts:
           path: ~/test-results/junit    
+
+       #Test coverage 
+      - android/start-emulator-and-run-tests:
+          test-command: ./gradlew jacocoTestReport
+      - run:
+          name: Save Coverage results
+          command: |
+            mkdir -p ~/test-results/junit/
+            mv ./app/build/reports/coverage/androidTest/debug ~/test-results/junit/ && mv ~/test-results/junit/debug/index.html ~/test-results/junit/debug/coverage_results.html && mv ~/test-results/junit/debug ~/test-results/junit/coverage_results    
+          when: always
+      - store_artifacts:
+          path: ~/test-results/junit   
 
       - android/run-tests:
           test-command: ./gradlew testDebug
@@ -64,16 +86,28 @@ jobs:
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
+          name: Download appcenter
+          command: npm install appcenter-cli -g
+      - run:
+            name: Login
+            command: appcenter login --token 0da0d7cd558b2eb4197f7725d20270877530a65d
+      - run:
           name: Assemble Debug build
           command: |
             ./gradlew assembleDebug
+      - run:
+          name: Deliver to appcenter
+          command: appcenter distribute release --debug --app juan.ocampo-perficient.com/ChartPOC --file app/build/outputs/apk/debug/app-debug.apk --group "App Testers"
       - store_artifacts:
-          path: /app/build/outputs/apk/debug
+          path: app/build/outputs/apk/debug
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   test-and-build:
     jobs:
-      - debug-build
+      - install-node-example
       - unit-test
       - android-test
+      - debug-build:
+          requires:
+            - install-node-example
