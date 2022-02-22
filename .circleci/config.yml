@@ -122,14 +122,6 @@ workflows:
             - install-node
             - unit-test
             - android-test
-          filters:
-            branches:
-              only:
-                - main
       - deploy-app-center: 
          requires: 
            - debug-build
-         filters:
-            branches:
-              only:
-                - main
