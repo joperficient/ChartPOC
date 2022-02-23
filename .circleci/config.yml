@@ -122,9 +122,13 @@ workflows:
   test-build-deploy:
     jobs:
       - install-node
+      - unit-test
+      - android-test
       - debug-build:
           requires:
             - install-node
+            - unit-test
+            - android-test
       - deploy-app-center: 
          requires: 
            - debug-build
