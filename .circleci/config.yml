@@ -132,3 +132,7 @@ workflows:
       - deploy-app-center: 
          requires: 
            - debug-build
+         filters:
+            branches:
+              only:
+                - main
