@@ -90,7 +90,9 @@ jobs:
             ./gradlew assembleDebug
       - run:
           name: Save debug apk 
-          command: mv ./app/build/outputs/apk/debug ~/app/build/outputs/apk/debug
+          command:  |
+            mkdir -p ~/app/build/outputs/apk/debug
+            mv ./app/build/outputs/apk/debug ~/app/build/outputs/apk/debug
       - store_artifacts:
           path: app/build/outputs/apk/debug
   deploy-app-center:
