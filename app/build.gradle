@@ -11,8 +11,8 @@ android {
         applicationId "com.perficient.chartpoc"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode generateVersionCode()
+        versionName generateVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -82,4 +82,48 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+
+def generateVersionCode() {
+    def versionCode
+    def process = "git rev-list --count main".execute()
+    versionCode = 1
+    def text = process.text
+    if (text != "") {
+        versionCode = text.toInteger()
+    }
+    return versionCode
+}
+
+def generateVersionName() {
+    return generateVersionMajor() + "." + generateVersionMinor() + "." + generateVersionPatch()
+}
+
+def generateVersionMajor() {
+    return "${versionMajor}".toInteger()
+}
+
+
+def generateVersionMinor() {
+    return "${versionMinor}".toInteger()
+}
+
+def generateVersionPatch() {
+    def branchName = getBranchName()
+
+    def myProcess = "git rev-list --count main";
+    def processVersionRevList = myProcess.execute()
+    def processVersionRevListText = processVersionRevList.text.trim()
+    return "${versionPatch}".toInteger()+ "." + processVersionRevListText
+}
+
+
+def getBranchName() {
+    def process = "git rev-parse --abbrev-ref HEAD".execute()
+    return process.text
+}
+
+task showCurrentVersion {
+    println "version code: ${generateVersionCode()}"
+    println "version name: ${generateVersionName()}"
 }
